@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Lazos</title>
+	<link rel="icon" href="favicon.png">
+	<link rel="stylesheet" type="text/css" href="shoelace.css">
+	<style type="text/css">
+		.hide {display: none;}
+		.list-table {overflow-x: scroll;}
+	</style>
+</head>
+<body>
+	<div id="loading" class="hide">
+		<center>
+			<br>
+			<span class="loader loader-lg"></span>
+		</center>
+	</div>
+	<div id="online" class="hide container">
+		<span id="signinform">
+			<h1>Welcome!</h1>
+			<div class="input-group">
+				<span class="input-addon">Email</span>
+				<input type="email" name="email" id="email">
+			</div>
+			<div class="input-group">
+				<span class="input-addon">Password</span>
+				</label><input type="password" name="pass" id="pass">
+			</div>
+			<p id="signupp"><a id="signuplink">Sign up</a> <a id="loginlink">Log in</a> if you <span id="dont">don't</span> have an account</p>
+
+			<button id="login">Log In</button> <button id="signup">Sign Up</button>
+		</span>
+		<div id="loggedin" class="hide">
+			<h1>Hello!</h1>
+			<p>
+				Logged in as: <span class="badge" id="username"></span> <button class="button-sm button-danger" id="logout">Log Out</button>
+			</p>
+
+			<hr>
+			<div class="row">
+				<div class="col-12 col-md-4">
+
+					<div class="input-field">
+						<input type="text" id="input">
+						<p class="input-hint">Add list item</p>
+						<input type="date" id="inputdate">
+						<p class="input-hint">Choose date</p>
+						<button id="submititem">Add</button>
+					</div>
+				</div>
+				<div class="col-12 col-md-8">
+					<h3 id="listtitle"></h3>
+					<div class="input-group">
+						<span style="max-width: 50%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;">
+							<input class="input-sm" type="text" id="changetitle" placeholder="Change title">
+						</span>
+						<button type="button" class="button-sm" id="submittitle">Change</button>
+					</div>
+					<p><span id="listlength"></span> item<span id="s"></span> in list</p>
+					<table class="list-table">
+						<thead>
+							<tr>
+								<td></td>
+								<td><em>Added</em></td>
+								<td><em>For</em></td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody id="list">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="firebase.js"></script>
+	<script src="config.js" charset="utf-8"></script>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
