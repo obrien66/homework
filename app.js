@@ -138,20 +138,17 @@ firebase.auth().onAuthStateChanged(user => {
 		dbList.on('value', function(snapshot){
 			// save in var
 			var dbListData = snapshot.val()
-            console.log(dbListData)
 			// clear list
             list.innerHTML = ""
             // if there is list data
             if (dbListData.list) {
-            	// iterate and write data
-				// dbListData.list.map(item => {
-    //             	list.innerHTML += `<li>${item.text} ${item.date}</li>`
-    //         	})
     			var struct = dbListData.list
                 var keyArr = []
+                // create list of keys
     			for (var key in struct){
                     keyArr.push(key)
     			}
+                // change number of items on UI
                 if (keyArr.length > 1) {
                     s.innerText = "s"
                 }
@@ -163,38 +160,43 @@ firebase.auth().onAuthStateChanged(user => {
                     }
                 }
                 listLength.innerText = keyArr.length
-
+                // iterate over the key array and write data using the snapshot from firebase and the key array
                 keyArr.reverse().map(key => {
                     if (struct[key].text && struct[key].dateAdded) {
-    					// list.innerHTML += `<li id="${key}">${struct[key].text} <span class="badge" id="smaller">${struct[key].date}</span> <button type="button" class="button-danger">X</button></li>`
     				    list.innerHTML += `<tr id="${key}">
                             <td>${struct[key].text}</td>
                             <td>${struct[key].dateAdded}</td>
                             <td>${struct[key].dateDue}</td>
                             <td><button id="button-${key}" type="button" class="button-danger" onclick="removeItem('${id}','${key}')" title="Delete item?">X</button></td>
                         </tr>`
-                        // console.log(document.getElementById(`button-${key}`).onclick)
     				}
                 })
             }
+            // if no items in list
             else {
                 listLength.innerText = "0"
                 s.innerText = "s"
             }
             // if the list has a title
             if (dbListData.listTitle) {
+                // Write list title and add an approptiate placeholder
             	document.getElementById('listtitle').innerText = dbListData.listTitle
+                inpTitle.placeholder = "Change Title"
             }
-
+            else {
+                // Change placeholder to make sense
+                inpTitle.placeholder = "Add a title to your list"
+            }
 		})
 	}
+    // If user not logged in
 	else {
 		form.classList.remove('hide')
 		loggedin.classList.add('hide')
 		logoutBtn.classList.add('hide')
 	}
 })
-
+// Check connection
 var connectedRef = firebase.database().ref(".info/connected");
 
 connectedRef.on("value", function(snap) {
