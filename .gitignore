@@ -1,1 +1,6 @@
-config.js
+public/config.js
+database.rules.json
+firebase.json
+firestore.indexes.json
+firestore.rules
+.firebaserc
