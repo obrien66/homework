@@ -22,7 +22,7 @@
 			<h1>Welcome!</h1>
 			<div class="input-group">
 				<span class="input-addon">Email</span>
-				<input type="email" name="email" id="email">
+				<input type="email" id="email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/">
 			</div>
 			<div class="input-group">
 				<span class="input-addon">Password</span>
@@ -31,6 +31,12 @@
 			<p id="signupp"><a id="signuplink">Sign up</a> <a id="loginlink">Log in</a> if you <span id="dont">don't</span> have an account</p>
 
 			<button id="login">Log In</button> <button id="signup">Sign Up</button>
+			<br><br>
+			<center>
+				<div id="error" class="alert alert-danger hide">
+
+				</div>
+			</center>
 		</span>
 		<div id="loggedin" class="hide">
 			<h1>Hello!</h1>
@@ -48,6 +54,9 @@
 						<input type="date" id="inputdate">
 						<p class="input-hint">Choose date</p>
 						<button id="submititem">Add</button>
+					</div>
+					<div class="alert alert-danger hide" id="list-error">
+
 					</div>
 				</div>
 				<div class="col-12 col-md-8">

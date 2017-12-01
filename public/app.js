@@ -31,6 +31,9 @@ var online = document.getElementById('online')
 var s = document.getElementById('s')
 var listLength = document.getElementById('listlength')
 
+var errorDiv = document.getElementById('error')
+var listError = document.getElementById('list-error')
+
 // Sign up / log in functionality
 signupBtn.classList.add('hide')
 loginLink.classList.add('hide')
@@ -76,7 +79,15 @@ function setTitle(uid, title){
 function removeItem(uid, itemKey){
     firebase.database().ref('lists/' + uid + '/list/' + itemKey).set(null)
 }
-
+// BLESS STACK OVERFLOW
+function isHTML(str) {
+    var a = document.createElement('div');
+    a.innerHTML = str;
+    for (var c = a.childNodes, i = c.length; i--; ) {
+        if (c[i].nodeType == 1) return true;
+    }
+    return false;
+}
 // Onclick login
 loginBtn.addEventListener('click', e => {
 	// Get email password values
@@ -86,7 +97,15 @@ loginBtn.addEventListener('click', e => {
 	var auth = firebase.auth()
 	// Try sign in
 	var signin = auth.signInWithEmailAndPassword(email, pass)
-	signin.catch(e => console.log(e.message))
+	signin.catch(e => {
+        if (e.code) {
+            errorDiv.classList.remove("hide")
+            errorDiv.innerText = e.message
+        }
+        else {
+            errorDiv.classList.add("hide")
+        }
+    })
 })
 // Onclick sign up
 signupBtn.addEventListener('click', e => {
@@ -97,7 +116,15 @@ signupBtn.addEventListener('click', e => {
 	var auth = firebase.auth()
 	// try sign up
 	var signin = auth.createUserWithEmailAndPassword(email, pass)
-	signin.catch(e => console.log(e.message))
+	signin.catch(e => {
+        if (e.code) {
+            errorDiv.classList.remove("hide")
+            errorDiv.innerText = e.message
+        }
+        else {
+            errorDiv.classList.add("hide")
+        }
+    })
 })
 // Onclick log out
 logoutBtn.addEventListener('click', e => {
@@ -117,11 +144,17 @@ firebase.auth().onAuthStateChanged(user => {
 		// Setup onclicks for submitting list items and title changes
         let inputVal
 		submitItem.onclick = function(){
-			inputVal = input.value
+			inputVal = input.value.trim()
             inDateVal = inputDate.value || "N/A"
-            if (inputVal) {
+            if (inputVal && !isHTML(inputVal)) {
                 // Set the list
                 setList(user.uid, inputVal, inDateVal)
+                listError.classList.add("hide")
+            }
+            else {
+                listError.classList.remove("hide")
+                input.value = ""
+                listError.innerText = "Invalid input"
             }
 		}
         subTitle.onclick = function(){
